@@ -1,0 +1,121 @@
+import os       # The OS module can be used to remove files and/or clean empty directories.
+import shutil   # The Shutil module will remove non-empty directories.
+import time     # The time module is used in order to put an appropriate timestamp.
+
+
+def Times():
+    Time = time.strftime("%H:%M:%S")
+    return Time
+
+
+def make_folder():
+    print("\nMake Any Folder")
+    name_of_folder = input("Enter The Name Of Folder : ")
+    units_of_folder = int(input("Enter The Unit Od Folder : "))
+    # os.mkdir(name_of_folder)
+    lst_in_folder = [os.mkdir(f"{name_of_folder}_{i + 1}") for i in range(units_of_folder)]  # Using The For Loop To Create As Many Folder As User Wan't
+    print(f"The New Folder Is Created : {lst_in_folder} \n At This Time : {Times()}")
+
+
+def remove_folder():
+    print("\nRemove Any Folder")
+    folder_file = input("Enter The File Or Folder (fle, fol) : ").lower()
+    if (folder_file == "fle"):
+        files_name = input("Enter The File Valid File Name : ")
+        if (os.path.exists(files_name)):
+            os.remove(files_name)
+            print(f"The File Is Deleted : {files_name} At This Time : {Times()}")
+        else:
+            print("The File Isn't Deleted")
+
+    elif folder_file == "fol":
+        folder_name = input("Enter The Folder Name : ")
+        try:
+            shutil.rmtree(folder_name)  # used to delete a non-empty directory and all its contents recursively
+            print(f"The Folder '{folder_name}' Is Deleted Successfuly \n At This Time : {Times()}")
+        except OSError as e:    # It is raised when the os specific system function returns a system-related or I/O error. 
+            print(f"Error: {e}. The folder '{folder_name}' Wasn't Deleted")
+
+    else:
+        print("Invalid Input. Please Enter 'fil' For file or 'fol' For Folder")
+
+
+def rename_folder():
+    print("\nRename Any Folder")
+    files = input("Enter The File Or Folder (fle, fol) : ").lower()
+
+    if (files == "fol"):
+        previous_folders = input("Enter The Name Previous Folder : ")
+        new_name_folder = input("Enter The New Name Of Folder : ")
+        try:
+            os.path.exists(previous_folders)
+            renaming_folder = os.rename(previous_folders, new_name_folder)
+            return print(f"This Folder {previous_folders} To {new_name_folder} \n At This Time : {Times()}")
+        except Exception as e:
+            print(e)
+
+    elif (files == "fle"):
+        previous_file = input("Enter The Name Previous Folder : ")
+        new_name_file = input("Enter The New Name Of Folder : ")
+        try:
+            os.path.exists(previous_file)
+            renaming_folder = os.rename(previous_file, new_name_file)
+            return print(f"This Folder {previous_file} To {new_name_file} \n At This Time : {Times()}")
+        except Exception as e:
+            print(e)
+
+    else:
+        print(f"This Is The Invalid Folder ")
+
+
+def see_any_folder():
+    print("\n See Any Folder & Files")
+    folders = input("Enter The File Or Folder (fle, fol) : ").lower()
+    if (folders == "fle"):
+        name_of_file = input("Enter The File Valid Name : ")
+        check = os.path.exists(name_of_file)
+        file_locates = os.path.abspath(name_of_file)
+        if (check == True):
+            print(f"The File Is Exists In: {file_locates}")
+        else:
+            print(f"The OSSystem Isn't Find This File {name_of_file}")
+
+    elif (folders == "fol"):
+        name_of_folder = input("Enter The File Valid Name : ")
+        check = os.path.exists(name_of_folder)
+        folder_locates = os.path.abspath(name_of_folder)
+        if (check == True):
+            print(f"The Folder Is Exists In : {folder_locates}")
+        else:
+            print(f"The OSSystem Isn't Find This Folder : {name_of_folder}")
+    else:
+        print(f"Doesn't See Any Folder Or File Like That : {folders}")
+
+def main_menu():
+    while True:
+        print(""" 
+            1. Make Folder & File
+            2. Remove Folder & File
+            3. Rename Folder & File
+            4. See Any Folder & File
+            5. Exit The Programme
+        """)
+
+        choice = int(input("Enter The Number : "))
+        if (choice == 1):
+            make_folder()
+
+        elif (choice == 2):
+            remove_folder()
+
+        elif (choice == 3):
+            rename_folder()
+
+        elif (choice == 4):
+            see_any_folder()
+
+        else:
+            print("Thank You For Visiting Programme")
+            quit()
+            print("\n")
+main_menu()
